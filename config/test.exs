@@ -17,3 +17,6 @@ config :authql, Authql.Repo,
   database: "authql_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Speed up comeonin during tests
+config :comeonin, :bcrypt_log_rounds, 4
