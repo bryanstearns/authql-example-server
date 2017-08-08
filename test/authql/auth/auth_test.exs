@@ -6,15 +6,15 @@ defmodule Authql.AuthTest do
   describe "users" do
     alias Authql.Auth.User
 
-    @valid_attrs %{email: "some email", password_hash: "some password_hash"}
-    @update_attrs %{email: "some updated email", password_hash: "some updated password_hash"}
-    @invalid_attrs %{email: nil, password_hash: nil}
+    @valid_attrs %{email: "bob@example.com", password: "some password"}
+    @update_attrs %{email: "ann@example.com", password: "updated password"}
+    @invalid_attrs %{email: "bad", password: ""}
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Auth.create_user()
+        |> Auth.register_user()
 
       user
     end
@@ -29,22 +29,23 @@ defmodule Authql.AuthTest do
       assert Auth.get_user!(user.id) == user
     end
 
-    test "create_user/1 with valid data creates a user" do
-      assert {:ok, %User{} = user} = Auth.create_user(@valid_attrs)
-      assert user.email == "some email"
-      assert user.password_hash == "some password_hash"
+    test "register_user/1 with valid data creates a user" do
+      assert {:ok, %User{} = user} = Auth.register_user(@valid_attrs)
+      assert user.email == "bob@example.com"
+      assert "$2b$" <> _ = user.password_hash
     end
 
-    test "create_user/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Auth.create_user(@invalid_attrs)
+    test "register_user/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Auth.register_user(@invalid_attrs)
     end
 
     test "update_user/2 with valid data updates the user" do
       user = user_fixture()
+      old_password_hash = user.password_hash
       assert {:ok, user} = Auth.update_user(user, @update_attrs)
       assert %User{} = user
-      assert user.email == "some updated email"
-      assert user.password_hash == "some updated password_hash"
+      assert user.email == "ann@example.com"
+      assert old_password_hash != user.password_hash
     end
 
     test "update_user/2 with invalid data returns error changeset" do
