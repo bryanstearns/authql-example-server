@@ -37,6 +37,7 @@ defmodule Authql.Mixfile do
       {:absinthe_plug, "~> 1.3.1"},
       {:bcrypt_elixir, "~> 0.12.1"},
       {:comeonin, "~> 4.0.0"},
+      {:cors_plug, "~> 1.4.0"},
       {:cowboy, "~> 1.0"},
       {:gettext, "~> 0.11"},
       {:phoenix, "~> 1.3.0"},
@@ -44,7 +45,8 @@ defmodule Authql.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:phoenix_pubsub, "~> 1.0"},
-      {:postgrex, ">= 0.0.0"}
+      {:postgrex, ">= 0.0.0"},
+      {:timex, "~> 3.1.24"}
     ]
   end
 
