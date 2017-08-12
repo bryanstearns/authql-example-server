@@ -10,8 +10,14 @@ defmodule AuthqlWeb.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug AuthqlWeb.Context
   end
+
+  scope "/api" do
+    pipe_through :api
+    forward "/", Absinthe.Plug, schema: AuthqlWeb.GraphQL.Schema
+  end
+  forward "/graphiql", Absinthe.Plug.GraphiQL, schema: AuthqlWeb.GraphQL.Schema
 
   scope "/", AuthqlWeb do
     pipe_through :browser # Use the default browser stack
@@ -19,6 +25,4 @@ defmodule AuthqlWeb.Router do
     get "/", PageController, :index
   end
 
-  forward "/api", Absinthe.Plug, schema: AuthqlWeb.GraphQL.Schema
-  forward "/graphiql", Absinthe.Plug.GraphiQL, schema: AuthqlWeb.GraphQL.Schema
 end

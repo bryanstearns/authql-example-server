@@ -12,8 +12,8 @@ defmodule Authql.Application do
       supervisor(Authql.Repo, []),
       # Start the endpoint when the application starts
       supervisor(AuthqlWeb.Endpoint, []),
-      # Start your own worker by calling: Authql.Worker.start_link(arg1, arg2, arg3)
-      # worker(Authql.Worker, [arg1, arg2, arg3]),
+      # Start the session store
+      worker(Authql.Auth.Session, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

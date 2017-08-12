@@ -2,10 +2,9 @@ defmodule Authql.Auth do
   @moduledoc """
   The Auth context.
   """
-
   import Ecto.Query, warn: false
   alias Authql.Repo
-
+  alias Authql.Auth.Session
   alias Authql.Auth.User
 
   @doc """
@@ -100,5 +99,72 @@ defmodule Authql.Auth do
   """
   def change_user(%User{} = user) do
     User.changeset(user, %{})
+  end
+
+  @doc """
+  Looks up a session by its token.
+
+  Returns {:error, :not_found} if the token doesn't correspond to a session,
+  or {:error, :expired} if it's too old (but hasn't been cleaned up yet)
+
+  ## Examples
+
+      iex> get_session("...")
+      {:ok, %Session{}}
+
+      iex> get_session("bogus")
+      {:error, :not_found}
+
+  """
+  defdelegate get_session(token), to: Session, as: :get
+
+  @doc """
+  Is this token valid?
+
+  ## Examples
+      iex> token_valid?("...")
+      true
+
+      iex> token_valid?("bogus")
+      false
+
+  """
+  def token_valid?(token) do
+    case get_session(token) do
+      {:ok, _session} -> true
+      error -> false
+    end
+  end
+
+  @doc """
+  Creates a session.
+
+  ## Examples
+
+      iex> create_session(%{email: valid, password: valid})
+      {:ok, %Session{}}
+
+      iex> create_session(%{email: bad_value, password: bad_value})
+      {:error, :invalid}
+
+  """
+  def create_session(%{email: email, password: password}) do
+    Session.create(email, password)
+  end
+
+  @doc """
+  Deletes a Session; quietly ignores bogus tokens.
+
+  ## Examples
+
+      iex> delete_session(%{token: valid_token})
+      :ok
+
+      iex> delete_session(%{token: invalid_token})
+      {:error, :not_found}
+
+  """
+  def delete_session(%{token: token}) do
+    Session.delete(token)
   end
 end

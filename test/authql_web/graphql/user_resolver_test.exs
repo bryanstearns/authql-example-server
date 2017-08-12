@@ -3,8 +3,10 @@ defmodule AuthqlWeb.GraphQL.UserResolverTest do
   alias AuthqlWeb.GraphQL.UserResolver
 
   test "resolves all users" do
-    {:ok, user} = Authql.Auth.register_user(%{email: "x@y.com",
-                                              password: "swordfish"})
-    assert {:ok, [^user]} = UserResolver.all([], [])
+    credentials = %{email: "x@y.com", password: "swordfish"}
+    {:ok, user} = Authql.Auth.register_user(credentials)
+    {:ok, session} = Authql.Auth.create_session(credentials)
+    assert {:ok, [^user]} =
+      UserResolver.all([], %{context: %{token: session.token}})
   end
 end
