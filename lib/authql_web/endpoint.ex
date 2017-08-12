@@ -38,6 +38,7 @@ defmodule AuthqlWeb.Endpoint do
     key: "_authql_key",
     signing_salt: "KAyOEoez"
 
+  plug CORSPlug
   plug AuthqlWeb.Router
 
   @doc """
