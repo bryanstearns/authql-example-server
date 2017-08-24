@@ -6,7 +6,7 @@ use Mix.Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
-config :authql, AuthqlWeb.Endpoint,
+config :example, ExampleWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -31,13 +31,13 @@ config :authql, AuthqlWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :authql, AuthqlWeb.Endpoint,
+config :example, ExampleWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
-      ~r{lib/authql_web/views/.*(ex)$},
-      ~r{lib/authql_web/templates/.*(eex)$}
+      ~r{lib/example_web/views/.*(ex)$},
+      ~r{lib/example_web/templates/.*(eex)$}
     ]
   ]
 
@@ -54,10 +54,10 @@ config :cors_plug,
   methods: ["GET", "POST"]
 
 # Configure your database
-config :authql, Authql.Repo,
+config :example, Example.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
-  database: "authql_dev",
+  database: "example_dev",
   hostname: "localhost",
   pool_size: 10

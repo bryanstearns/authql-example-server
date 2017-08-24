@@ -1,4 +1,4 @@
-defmodule AuthqlWeb.ChannelCase do
+defmodule ExampleWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -21,15 +21,15 @@ defmodule AuthqlWeb.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint AuthqlWeb.Endpoint
+      @endpoint ExampleWeb.Endpoint
     end
   end
 
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Authql.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Example.Repo)
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Authql.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Example.Repo, {:shared, self()})
     end
     :ok
   end

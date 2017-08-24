@@ -1,4 +1,4 @@
-defmodule AuthqlWeb.ConnCase do
+defmodule ExampleWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -19,18 +19,18 @@ defmodule AuthqlWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      import AuthqlWeb.Router.Helpers
+      import ExampleWeb.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint AuthqlWeb.Endpoint
+      @endpoint ExampleWeb.Endpoint
     end
   end
 
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Authql.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Example.Repo)
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Authql.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Example.Repo, {:shared, self()})
     end
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end

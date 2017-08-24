@@ -1,9 +1,9 @@
-defmodule Authql.Mixfile do
+defmodule Example.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :authql,
+      app: :example,
       version: "0.0.1",
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env),
@@ -19,7 +19,7 @@ defmodule Authql.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Authql.Application, []},
+      mod: {Example.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -35,6 +35,7 @@ defmodule Authql.Mixfile do
     [
       {:absinthe_ecto, "~> 0.1.0"},
       {:absinthe_plug, "~> 1.3.1"},
+      {:authql, path: "../server"},
       {:bcrypt_elixir, "~> 0.12.1"},
       {:comeonin, "~> 4.0.0"},
       {:cors_plug, "~> 1.4.0"},

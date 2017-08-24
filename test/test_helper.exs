@@ -1,4 +1,4 @@
 ExUnit.start()
 
-Ecto.Adapters.SQL.Sandbox.mode(Authql.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(Example.Repo, :manual)
 

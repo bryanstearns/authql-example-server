@@ -1,4 +1,4 @@
-# Authql
+# Example
 
 To start your Phoenix server:
 
